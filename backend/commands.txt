@@ -1,0 +1,8 @@
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 6.0.25
+
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 6.0.25
+
+Server=localhost\SQLEXPRESS;Database=DBLibrary;Trusted_Connection=True;
+
+dotnet ef dbcontext scaffold "Server=localhost\SQLEXPRESS;Database=DBLibrary;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer --context-dir .\Data --output-dir .\Models
+
