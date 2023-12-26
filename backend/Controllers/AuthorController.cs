@@ -1,8 +1,6 @@
-using System;
-using backend.Data;
 using backend.Models;
+using backend.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace backend.Controllers
 {
@@ -10,66 +8,52 @@ namespace backend.Controllers
     [Route("api/author")]
     public class AuthorController : ControllerBase
     {
-        private readonly DBLibraryContext _context;
-        public AuthorController(DBLibraryContext context)
+        private readonly AuthorService _service;
+        public AuthorController(AuthorService service)
         {
-            this._context = context;
+            this._service = service;
         }
 
-        //This method is the one that brings all the Authors from the the Authors table
+
         [HttpGet]
-        public List<Author> GetAuthorAlls()
+        public async Task<ActionResult<List<Author>>> GetAllAuthors()
         {
-            return this._context.Authors.ToList();
+            return await this._service.GetAllAuthors();
         }
 
-        //This method is the one that brings the Authors by Id from the the Authors table
+
         [HttpGet("{id}")]
-        public ActionResult<Author> GetAuthorById(int id)
+        public async Task<ActionResult<Author>> GetAuthorById(int id)
         {
-            var author = this._context.Authors.Find(id);
-            return author == null ? NotFound() : author;
+            var author = await this._service.GetAuthorById(id);
+            if (author == null)
+                return NotFound();
+
+                return author;
         }
 
 
-        //This method creates a new author 
         [HttpPost]
         public ActionResult CreateAuthor(Author author)
         {
-            this._context.Authors.Add(author);
-            this._context.SaveChanges();
-            return Ok("Success");
+            var result = this._service.CreateAuthor(author);
+            return Ok(result);
         }
 
-        //This methos updates the selected author by Id 
+
         [HttpPut("{id}")]
-        public ActionResult UpdateAuthor(Author author, int id)
+        public ActionResult UpdateAuthor(int id, Author author)
         {
-            var fauthor = this._context.Authors.Find(id);
-            if (fauthor == null)
-                return NotFound();
-
-            fauthor.Name = author.Name;
-            fauthor.Lastname = author.Lastname;
-
-            this._context.Authors.Update(fauthor);
-            this._context.SaveChanges();
-            return Ok("Updated");
+            var result = this._service.UpdateAuthorById(id, author);
+            return Ok(result);
         }
 
-        //This method delete the selected author by id 
+
         [HttpDelete("{id}")]
         public ActionResult DeleteAuthor(int id)
         {
-            var fauthor = this._context.Authors.Find(id);
-            if (fauthor == null)
-                return NotFound();
-
-            this._context.Authors.Remove(fauthor);
-            this._context.SaveChanges();
-            return Ok("Deleted");
-        }
-
+            var dauthor = this._service.DeleteAuthorById(id);
+            return Ok(dauthor);
+        }     
     }
-
 }

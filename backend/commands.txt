@@ -6,3 +6,7 @@ Server=localhost\SQLEXPRESS;Database=DBLibrary;Trusted_Connection=True;
 
 dotnet ef dbcontext scaffold "Server=localhost\SQLEXPRESS;Database=DBLibrary;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer --context-dir .\Data --output-dir .\Models
 
+dotnet add reference ../backend/backend.csproj
+
+dotnet test
+

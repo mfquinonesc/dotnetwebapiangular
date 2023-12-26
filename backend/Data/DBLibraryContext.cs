@@ -77,11 +77,11 @@ namespace backend.Data
                     .IsUnicode(false)
                     .HasColumnName("title");
 
-                entity.HasOne(d => d.Editorial)
-                    .WithMany(p => p.Books)
-                    .HasForeignKey(d => d.EditorialId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Editorial_Book");
+                // entity.HasOne(d => d.Editorial)
+                //     .WithMany(p => p.Books)
+                //     .HasForeignKey(d => d.EditorialId)
+                //     .OnDelete(DeleteBehavior.ClientSetNull)
+                //     .HasConstraintName("fk_Editorial_Book");
             });
 
             modelBuilder.Entity<Editorial>(entity =>

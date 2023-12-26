@@ -16,7 +16,7 @@ namespace backend.Models
         public int? Pages { get; set; }
         public int EditorialId { get; set; }
 
-        public virtual Editorial Editorial { get; set; } = null!;
+        // public virtual Editorial Editorial { get; set; } = null!;
 
         public virtual ICollection<Author> Authors { get; set; }
     }
