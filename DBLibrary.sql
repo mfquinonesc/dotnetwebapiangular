@@ -55,3 +55,17 @@ VALUES('Agenda Publishing', 'New York');
 INSERT INTO Editorial
     (name,location)
 VALUES('Bristol University Press', 'New York');
+
+INSERT INTO Book
+    ( title , description , pages , editorialID )
+VALUES('The old man and the sea', 'Any description', 351, 1);
+
+INSERT INTO Author_HAS_Book
+    (authorID, bookID )
+VALUES(1, 1);
+
+CREATE VIEW General
+AS
+    SELECT b.bookID, a.authorID, e.editorialID, b.title, b.pages, b.description, a.name, a.lastname, e.name AS editorialname, e.location
+    FROM Book b JOIN Author_HAS_Book ab ON b.bookID = ab.bookID JOIN Author a ON a.authorID = ab.authorID JOIN Editorial e ON e.editorialID = b.editorialID
+GO

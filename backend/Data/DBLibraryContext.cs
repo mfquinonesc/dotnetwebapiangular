@@ -19,7 +19,17 @@ namespace backend.Data
 
         public virtual DbSet<Author> Authors { get; set; } = null!;
         public virtual DbSet<Book> Books { get; set; } = null!;
-        public virtual DbSet<Editorial> Editorials { get; set; } = null!;       
+        public virtual DbSet<Editorial> Editorials { get; set; } = null!;
+        public virtual DbSet<General> Generals { get; set; } = null!;
+
+//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//         {
+//             if (!optionsBuilder.IsConfigured)
+//             {
+// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                 optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=DBLibrary;Trusted_Connection=True;");
+//             }
+//         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -99,6 +109,51 @@ namespace backend.Data
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("name");
+            });
+
+            modelBuilder.Entity<General>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("General");
+
+                entity.Property(e => e.AuthorId).HasColumnName("authorID");
+
+                entity.Property(e => e.BookId).HasColumnName("bookID");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.EditorialId).HasColumnName("editorialID");
+
+                entity.Property(e => e.Editorialname)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("editorialname");
+
+                entity.Property(e => e.Lastname)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("lastname");
+
+                entity.Property(e => e.Location)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("location");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Pages).HasColumnName("pages");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("title");
             });
 
             OnModelCreatingPartial(modelBuilder);
