@@ -23,6 +23,7 @@ namespace backend.Services
             var fbook = await _context.Books.FindAsync(id);
             if (fbook != null)
             {
+                await _context.Database.ExecuteSqlRawAsync($"deleteAuthorBook {id}");
                 _context.Books.Remove(fbook);
                 await _context.SaveChangesAsync();
             }
@@ -58,15 +59,33 @@ namespace backend.Services
 
         public async Task<Book> CreateBook(Book book, int authorId)
         {
-            var editorial = await _context.Editorials.FindAsync(book.EditorialId);
             var author = await _context.Authors.FindAsync(authorId);
-            if (editorial != null && author != null)
+            var editorial = await _context.Editorials.FindAsync(book.EditorialId);
+            if (author != null && editorial != null)
             {
                 await _context.Books.AddAsync(book);
                 await _context.SaveChangesAsync();
-                await _context.Database.ExecuteSqlRawAsync($"Save_Author_HAS_Book {book.BookId} , {authorId}");
+                int lastId = book.BookId;
+                await _context.Database.ExecuteSqlRawAsync($"saveAuthorBook {authorId} , {lastId}");
             }
             return book;
+        }
+
+        public async Task<List<General>> GetGeneralTable()
+        {
+            return await _context.Generals.ToListAsync();
+        }
+
+        public async Task<General> GetGeneralByBookId(int bookId)
+        {
+            var list = await _context.Generals.ToListAsync();
+            var elements = from el in list where el.BookId == bookId select el;
+            General element = new General();
+            if (elements.ToList().Count > 0)
+            {
+                element = elements.ToList()[0];
+            }
+            return element;
         }
     }
 }

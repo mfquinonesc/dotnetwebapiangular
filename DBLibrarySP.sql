@@ -1,19 +1,18 @@
 USE DBLibrary;
 
-CREATE PROCEDURE Save_Author_HAS_Book
+CREATE PROCEDURE saveAuthorBook
     @authorID INT,
     @bookID INT
 AS
 INSERT INTO Author_HAS_Book
-VALUES(@authorID, @bookID);
+    (authorID , bookID)
+VALUES
+    (@authorID, @bookID);
 GO
 
-ALTER PROCEDURE Delete_Author_HAS_Book
+
+CREATE PROCEDURE deleteAuthorBook
     @bookID INT
 AS
-DELETE FROM Author_HAS_Book WHERE (bookID = @bookID);
-DELETE FROM Book WHERE (bookID = @bookID);
+DELETE FROM Author_HAS_Book WHERE (Author_HAS_Book.bookID = @bookID);
 GO
-
-DROP PROCEDURE Save_Author_HAS_Book;
-DROP PROCEDURE Delete_Author_HAS_Book;
