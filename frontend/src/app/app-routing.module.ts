@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'books', component: BooksComponent },
   { path: 'authors', component: AuthorsComponent },
   { path: 'editorials', component: EditorialComponent },
-  { path: 'booktable', component:BookstableComponent},
+  { path: 'books/table', component:BookstableComponent},
 ];
 
 @NgModule({
