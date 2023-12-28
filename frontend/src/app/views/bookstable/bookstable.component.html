@@ -11,20 +11,20 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Pages</th>
-                                <th>Editorial</th>
-                                <th>Author</th>
+                                <th>Editorial Name</th>
+                                <th>Author Name</th>                               
                                 <th>Description</th>
                                 <th>Open</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>The old man and the see</td>
-                                <td>351</td>
-                                <td>Any editorial</td>
-                                <td>Someone</td>
-                                <td>Lorem ipsum dolor sit amet.</td>
+                            <tr *ngFor="let book of bookList">
+                                <td>{{book.title}}</td>
+                                <td>{{book.pages}}</td>
+                                <td>{{book.description}}</td>
+                                <td>{{book.name + " " + book.lastname}}</td>
+                                <td>{{book.description}}</td>
                                 <td>
                                     <a>
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18"
@@ -43,7 +43,6 @@
                                         </svg>
                                     </a>
                                 </td>
-
                             </tr>
                         </tbody>
                     </table>

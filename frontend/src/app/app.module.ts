@@ -10,6 +10,7 @@ import { BooksComponent } from './views/books/books.component';
 import { AuthorsComponent } from './views/authors/authors.component';
 import { EditorialComponent } from './views/editorial/editorial.component';
 import { BookstableComponent } from './views/bookstable/bookstable.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { BookstableComponent } from './views/bookstable/bookstable.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

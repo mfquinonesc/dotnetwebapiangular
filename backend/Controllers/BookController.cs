@@ -27,7 +27,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<List<General>>> GGetGeneralTable()
+        public async Task<ActionResult<List<General>>> GetGeneralTable()
         {
             return await _service.GetGeneralTable();
         }
