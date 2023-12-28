@@ -34,25 +34,25 @@ namespace backend.Controllers
 
 
         [HttpPost]
-        public ActionResult CreateAuthor(Author author)
+        public async Task<ActionResult<Author?>> CreateAuthor(Author author)
         {
-            var result = this._service.CreateAuthor(author);
+            var result = await this._service.CreateAuthor(author);
             return Ok(result);
         }
 
 
         [HttpPut("{id}")]
-        public ActionResult UpdateAuthor(int id, Author author)
+        public async Task<ActionResult<Author?>> UpdateAuthor(int id, Author author)
         {
-            var result = this._service.UpdateAuthorById(id, author);
+            var result =  await this._service.UpdateAuthorById(id, author);
             return Ok(result);
         }
 
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteAuthor(int id)
+        public async Task<ActionResult<Author?>> DeleteAuthor(int id)
         {
-            var dauthor = this._service.DeleteAuthorById(id);
+            var dauthor = await this._service.DeleteAuthorById(id);
             return Ok(dauthor);
         }     
     }
