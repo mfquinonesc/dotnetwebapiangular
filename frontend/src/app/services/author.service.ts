@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
+import { Author } from '../models/author';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,13 @@ export class AuthorService {
   getAuthorById(id: number): Observable<any> {
     return this.http.get(`${this.path}/${id}`);
   }
-  
+
+  createAuthor(author: Author): Observable<any> {
+    return this.http.post(this.path, author);
+  }
+
+  deleteAuthor(id: number): Observable<any> {
+    return this.http.delete(`${this.path}/${id}`);
+  }
+
 }

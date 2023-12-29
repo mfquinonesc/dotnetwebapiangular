@@ -14,4 +14,8 @@ export class BookService {
   getGeneralTable(): Observable<any> {
     return this.http.get(`${this.path}/all`);
   }
+
+  deleteBook(id: number): Observable<any> {
+    return this.http.delete(`${this.path}/${id}`);
+  }
 }

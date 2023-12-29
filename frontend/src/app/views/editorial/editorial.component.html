@@ -12,7 +12,7 @@
                         <img src="../../../assets/images/undraw_Camera_re_cnp4.svg">
                     </figure>
                 </div>
-                <div data-aos="fade-down" class="column
+                <form [formGroup]="editorialForm" data-aos="fade-down" class="column
             is-10-mobile is-offset-1-mobile
             is-10-tablet is-offset-1-tablet
             is-5-desktop is-offset-1-desktop
@@ -25,20 +25,20 @@
                     <div class="field">
                         <label class="label">Name</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="Text input">
+                            <input formControlName="name" class="input" type="text" placeholder="Text input">
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">Location/City</label>
                         <div class="control">
-                            <input class="input" type="text" placeholder="Text input">
+                            <input formControlName="location" class="input" type="text" placeholder="Text input">
                         </div>
                     </div>
 
                     <div class="field is-grouped">
                         <div class="control">
-                            <button class="button is-link">Save</button>
+                            <button class="button is-link" (click)="createEditorial()">Save</button>
                         </div>
                         <div class="control">
                             <button class="button is-link is-light" routerLink="/">Cancel</button>
@@ -46,7 +46,7 @@
                     </div>
 
 
-                </div>
+                </form>
 
             </div>
         </div>

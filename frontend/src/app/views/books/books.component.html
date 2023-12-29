@@ -41,8 +41,7 @@
             <div class="control">
               <div class="select">
                 <select>
-                  <option>Select dropdown</option>
-                  <option>With options</option>
+                  <option *ngFor="let editorial of editorialsList; let i = index;" [ngValue]="editorial">{{editorial.name +" - "+editorial.location}}</option>
                 </select>
               </div>
             </div>
@@ -53,8 +52,7 @@
             <div class="control">
               <div class="select">
                 <select>
-                  <option>Select dropdown</option>
-                  <option>With options</option>
+                  <option *ngFor="let author of authorsList; let i = index;" [ngValue]="author">{{author.name + " - "+ author.lastname}}</option>                 
                 </select>
               </div>
             </div>

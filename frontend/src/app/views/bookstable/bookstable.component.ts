@@ -12,7 +12,7 @@ export class BookstableComponent implements OnInit {
 
   bookList: General[] = [];
 
-  constructor(private bookService: BookService) { 
+  constructor(private bookService: BookService) {
     this.loadTable();
   }
 
@@ -26,6 +26,16 @@ export class BookstableComponent implements OnInit {
       next: (value) => {
         if (value != null || value != undefined) {
           this.bookList = value as General[];
+        }
+      },
+    });
+  }
+
+  deleteBook(id: number) {
+    this.bookService.deleteBook(id).subscribe({
+      next: (value) => {
+        if (value != null || value != undefined) {
+          this.loadTable();
         }
       },
     });
