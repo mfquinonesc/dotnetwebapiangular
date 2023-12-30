@@ -18,7 +18,11 @@ export class AuthorsComponent implements OnInit {
     lastname: ['', Validators.required]
   });
 
-  constructor(private formBuilder: FormBuilder, private authorService: AuthorService, private router: Router) { }
+  _author: Author = new Author(0, '', '');
+
+  constructor(private formBuilder: FormBuilder, private authorService: AuthorService, private router: Router) {
+    this.loadUpdateAuthor();    
+  }
 
   ngOnInit(): void {
     Aos.init({ once: true });
@@ -40,23 +44,55 @@ export class AuthorsComponent implements OnInit {
     return this.authorForm.value.lastname;
   }
 
+
+  loadUpdateAuthor() {
+    this.authorService.getAuthor().subscribe({
+      next: (value) => {
+        if (value != new Author(0, '', '')) {
+          this._author = value;
+          this.authorForm.setValue({
+            name: value.name,
+            lastname: value.lastname
+          });
+        }
+      },
+    });
+  }
+
   createAuthor() {
     if (this.authorForm.valid) {
       const author = new Author(0, this.nameValue!, this.lastnameValue!)
       this.authorService.createAuthor(author).subscribe({
         next: (value) => {
-          if(value != null || value != undefined){
+          if (value != null || value != undefined) {
             this.router.navigateByUrl("authors/table");
           }
-        },error(err) {
+        }, error(err) {
           alert('Something went wrong!');
         },
       });
     }
   }
 
+  updateAuthor() {
+    if (this.authorForm.valid) {
+      const author = new Author(this._author.authorId!, this.nameValue!, this.lastnameValue!)
+      this.authorService.updateAuthor(this._author.authorId!, author).subscribe({
+        next: (value) => {
+          if (value != null || value != undefined) {
+            this.router.navigateByUrl("authors/table");
+          }
+        },
+      });
+    }
+  }
 
-  
-
+  saveAuthor() {
+    if (this._author.authorId != 0) {
+      this.updateAuthor();
+    } else {
+      this.createAuthor();
+    }
+  }
 
 }

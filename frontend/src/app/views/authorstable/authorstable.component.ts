@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Author } from 'src/app/models/author';
 import { AuthorService } from 'src/app/services/author.service';
 import * as Aos from 'aos';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authorstable',
@@ -12,7 +13,7 @@ export class AuthorstableComponent implements OnInit {
 
   authorList: Author[] = [];
 
-  constructor(private authorService: AuthorService) {
+  constructor(private authorService: AuthorService, private router: Router) {
     this.loadTable();
   }
 
@@ -41,8 +42,9 @@ export class AuthorstableComponent implements OnInit {
     });
   }
 
-  updateAuthor(id:number){
-
+  toUpdateAuthor(author: Author) {
+    this.authorService.setAuthor(author);
+    this.router.navigateByUrl('authors');
   }
 
 
