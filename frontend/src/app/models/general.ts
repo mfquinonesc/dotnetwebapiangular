@@ -5,14 +5,14 @@ export class General implements Book{
     title: string;
     description: string;
     pages: number;
-    editorialId: string;
+    editorialId: number;
     authorId?: number;
     name?: string;
     lastname?: string;
     editorialname?: string;
     location? : string;
 
-    constructor(bookId: number, title: string, description: string, pages: number, editorialId: string){
+    constructor(bookId: number, title: string, description: string, pages: number, editorialId: number){
         this.bookId = bookId;
         this.description = description;
         this.pages = pages;

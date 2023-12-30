@@ -3,9 +3,9 @@ export class Book {
     title: string;
     description: string;
     pages: number;
-    editorialId: string;
+    editorialId: number;
 
-    constructor(bookId: number, title: string, description: string, pages: number, editorialId: string) {
+    constructor(bookId: number, title: string, description: string, pages: number, editorialId: number) {
         this.bookId = bookId;
         this.description = description;
         this.pages = pages;
