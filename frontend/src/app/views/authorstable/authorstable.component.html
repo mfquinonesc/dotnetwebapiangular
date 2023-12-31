@@ -4,15 +4,14 @@
             <div class="columns is-centered">
                 <div data-aos="zoom-in-up" class="column is-8">
                     <div class="is-centered column">
-                        <h1 class="title titled is-1 mb-6"> List of Authors </h1>
+                        <h1 class="title titled is-1 mb-6">List of Authors </h1>
                     </div>
-
                     <table class="table is-fullwidth is-hoverable">
                         <thead>
                             <tr>
                                 <th>Index</th>
                                 <th>Author's name</th>
-                                <th>Author's lastname</th> 
+                                <th>Author's lastname</th>
                                 <th>Open</th>
                                 <th>Delete</th>
                             </tr>
@@ -21,7 +20,7 @@
                             <tr *ngFor="let author of authorList; let i = index;">
                                 <td>{{i+1}}</td>
                                 <td>{{author.name}}</td>
-                                <td>{{author.lastname}}</td>                                                                     
+                                <td>{{author.lastname}}</td>
                                 <td>
                                     <a (click)="toUpdateAuthor(author)">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18"
@@ -43,7 +42,6 @@
                             </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
 

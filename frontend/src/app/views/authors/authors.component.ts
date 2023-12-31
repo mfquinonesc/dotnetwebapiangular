@@ -95,4 +95,11 @@ export class AuthorsComponent implements OnInit {
     }
   }
 
+  cancel(){
+    if (this._author.authorId != 0) {
+      this.router.navigateByUrl('/authors/table');
+    } else {
+      this.router.navigateByUrl('/');
+    }
+  }
 }
