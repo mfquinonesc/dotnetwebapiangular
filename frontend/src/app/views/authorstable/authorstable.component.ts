@@ -44,7 +44,7 @@ export class AuthorstableComponent implements OnInit {
 
   toUpdateAuthor(author: Author) {
     this.authorService.setAuthor(author);
-    this.router.navigateByUrl('authors');
+    this.router.navigateByUrl('/authors');
   }
 
 

@@ -80,7 +80,7 @@ export class AuthorsComponent implements OnInit {
       this.authorService.updateAuthor(this._author.authorId!, author).subscribe({
         next: (value) => {
           if (value != null || value != undefined) {
-            this.router.navigateByUrl("authors/table");
+            this.router.navigateByUrl("/authors/table");
           }
         },
       });

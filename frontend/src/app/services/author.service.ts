@@ -23,7 +23,7 @@ export class AuthorService {
   }
 
   resetAuthor() {
-    this._author.next(new Author(0, '', ''));
+    this.setAuthor(new Author(0, '', ''));
   }
 
   getAllAuthors(): Observable<any> {

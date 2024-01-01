@@ -40,7 +40,7 @@
             <label class="label">Editorial</label>
             <div class="control">
               <div class="select">
-                <select formControlName="editorial">                
+                <select formControlName="editorial" >                
                   <option *ngFor="let editorial of editorialsList; let i = index;" [ngValue]="editorial">{{editorial.name +" - "+editorial.location}}</option>
                 </select>
               </div>
@@ -51,7 +51,7 @@
             <label class="label">Author</label>
             <div class="control">
               <div class="select">
-                <select formControlName="author">                 
+                <select formControlName="author" >                 
                   <option *ngFor="let author of authorsList; let i = index;" [ngValue]="author">{{author.name + " - "+ author.lastname}}</option>                 
                 </select>
               </div>

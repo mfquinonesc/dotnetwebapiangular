@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Editorial } from 'src/app/models/editorial';
 import * as Aos from 'aos';
 import { EditorialService } from 'src/app/services/editorial.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-editorialstable',
@@ -12,7 +13,7 @@ export class EditorialstableComponent implements OnInit {
 
   editorialsList: Editorial[] = [];
 
-  constructor(private editorialService: EditorialService) {
+  constructor(private editorialService: EditorialService,private router: Router) {
     this.loadTable();
   }
 
@@ -39,6 +40,11 @@ export class EditorialstableComponent implements OnInit {
         }
       },
     })
+  }
+
+  toUpdateEditorial(editorial:Editorial){
+    this.editorialService.setEditorial(editorial);
+    this.router.navigateByUrl('/editorials');
   }
 
 }

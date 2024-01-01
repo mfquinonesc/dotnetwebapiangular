@@ -5,6 +5,7 @@ import * as Aos from 'aos';
 import { Author } from 'src/app/models/author';
 import { Book } from 'src/app/models/book';
 import { Editorial } from 'src/app/models/editorial';
+import { General } from 'src/app/models/general';
 import { AuthorService } from 'src/app/services/author.service';
 import { BookService } from 'src/app/services/book.service';
 import { EditorialService } from 'src/app/services/editorial.service';
@@ -27,14 +28,17 @@ export class BooksComponent implements OnInit {
     description: ['', Validators.required]
   });
 
+  _book: General = new General(0, '', '', 0, 0);
+  editorialIndex: number = 0;
+  authorIndex: number = 0;
+
   constructor(private editorialService: EditorialService, private authorService: AuthorService, private bookService: BookService, private formBuilder: FormBuilder, private router: Router) {
     this.loadAuthors();
     this.loadEditorials();
+    this.loadUpdateBook();
   }
 
   ngOnInit(): void {
-    this.loadAuthors();
-    this.loadEditorials();
     Aos.init({ once: true });
   }
 
@@ -68,6 +72,23 @@ export class BooksComponent implements OnInit {
   }
   get descriptionValue() {
     return this.bookForm.value.description;
+  }
+
+  loadUpdateBook() {
+    this.bookService.getBook().subscribe({
+      next: (value) => {
+        if (value != new General(0, '', '', 0, 0)) {
+          this._book = value as General;         
+          this.bookForm.setValue({
+            title: this._book.title,
+            page: this._book.pages.toString(),
+            description: this._book.description,
+            editorial: null,
+            author: null
+          });
+        }
+      },
+    });
   }
 
   loadEditorials() {
@@ -105,8 +126,34 @@ export class BooksComponent implements OnInit {
     }
   }
 
+  updateBook() {
+    if (this.bookForm.valid) {
+      const authorId = this.authorValue.authorId;
+      const editorialId = this.editorialValue.editorialId;
+      const book = new Book(0, this.titleValue!, this.descriptionValue!, this.pageValue, editorialId);
+      this.bookService.updateBook(book, this._book.bookId!).subscribe({
+        next: (value) => {
+          if (value != null && value != undefined) {
+            this.router.navigateByUrl('/books/table');
+          }
+        },
+      });
+    }
+  }
 
+  saveAuthor() {
+    if (this._book.bookId != 0) {
+      this.updateBook();
+    } else {
+      this.createBook();
+    }
+  }
 
-
-
+  cancel() {
+    if (this._book.bookId != 0) {
+      this.router.navigateByUrl('/books/table');
+    } else {
+      this.router.navigateByUrl('/');
+    }
+  }
 }

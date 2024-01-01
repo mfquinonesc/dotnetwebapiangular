@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as Aos from 'aos';
+import { Book } from 'src/app/models/book';
 import { General } from 'src/app/models/general';
 import { BookService } from 'src/app/services/book.service';
 
@@ -12,7 +14,7 @@ export class BookstableComponent implements OnInit {
 
   bookList: General[] = [];
 
-  constructor(private bookService: BookService) {
+  constructor(private bookService: BookService, private router: Router) {
     this.loadTable();
   }
 
@@ -41,5 +43,9 @@ export class BookstableComponent implements OnInit {
     });
   }
 
+  toUpdateBook(book: Book) {
+    this.bookService.setBook(book);
+    this.router.navigateByUrl('/books');
+  }
 
 }
