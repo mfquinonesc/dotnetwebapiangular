@@ -10,9 +10,15 @@ export class EditorialService {
 
   path: string = 'https://localhost:7083/api/editorial';
 
-  private _editorial = new BehaviorSubject<Editorial>(new Editorial(0, '', ''));
+  private _newEditorial = new Editorial(0,'','');
+
+  private _editorial = new BehaviorSubject<Editorial>(this.newEditorial);
 
   constructor(private http: HttpClient) { }
+
+  get newEditorial(){
+    return this._newEditorial;
+  }
 
   setEditorial(value: Editorial) {
     this._editorial.next(value);

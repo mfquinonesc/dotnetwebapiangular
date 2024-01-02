@@ -17,7 +17,7 @@ export class EditorialComponent implements OnInit {
     location: ['', Validators.required]
   });
 
-  _editorial: Editorial = new Editorial(0, '', '');
+  _editorial: Editorial = this.editorialService.newEditorial;
 
   constructor(private formBuilder: FormBuilder, private editorialService: EditorialService, private router: Router) { 
     this.loadUpdateEditorial();
@@ -46,7 +46,7 @@ export class EditorialComponent implements OnInit {
   loadUpdateEditorial() {
     this.editorialService.getEditorial().subscribe({
       next: (value) => {
-        if (value != new Editorial(0, '', '')) {
+        if (value != this.editorialService.newEditorial) {
           this._editorial = value;
           this.editorialForm.setValue({
             name: value.name,

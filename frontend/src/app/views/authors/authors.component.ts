@@ -18,7 +18,7 @@ export class AuthorsComponent implements OnInit {
     lastname: ['', Validators.required]
   });
 
-  _author: Author = new Author(0, '', '');
+  _author: Author = this.authorService.newAuthor;
 
   constructor(private formBuilder: FormBuilder, private authorService: AuthorService, private router: Router) {
     this.loadUpdateAuthor();    
@@ -48,7 +48,7 @@ export class AuthorsComponent implements OnInit {
   loadUpdateAuthor() {
     this.authorService.getAuthor().subscribe({
       next: (value) => {
-        if (value != new Author(0, '', '')) {
+        if (value != this.authorService.newAuthor) {
           this._author = value;
           this.authorForm.setValue({
             name: value.name,
@@ -64,7 +64,7 @@ export class AuthorsComponent implements OnInit {
       const author = new Author(0, this.nameValue!, this.lastnameValue!)
       this.authorService.createAuthor(author).subscribe({
         next: (value) => {
-          if (value != null || value != undefined) {
+          if (value) {
             this.router.navigateByUrl("authors/table");
           }
         }, error(err) {
@@ -79,7 +79,7 @@ export class AuthorsComponent implements OnInit {
       const author = new Author(this._author.authorId!, this.nameValue!, this.lastnameValue!)
       this.authorService.updateAuthor(this._author.authorId!, author).subscribe({
         next: (value) => {
-          if (value != null || value != undefined) {
+          if (value) {
             this.router.navigateByUrl("/authors/table");
           }
         },
@@ -88,7 +88,7 @@ export class AuthorsComponent implements OnInit {
   }
 
   saveAuthor() {
-    if (this._author.authorId != 0) {
+    if (this._author.authorId! > 0) {
       this.updateAuthor();
     } else {
       this.createAuthor();
@@ -96,7 +96,7 @@ export class AuthorsComponent implements OnInit {
   }
 
   cancel(){
-    if (this._author.authorId != 0) {
+    if (this._author.authorId! > 0) {
       this.router.navigateByUrl('/authors/table');
     } else {
       this.router.navigateByUrl('/');

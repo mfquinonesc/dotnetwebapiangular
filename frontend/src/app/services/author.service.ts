@@ -8,11 +8,17 @@ import { Author } from '../models/author';
 })
 export class AuthorService {
 
-  private _author = new BehaviorSubject<Author>(new Author(0, '', ''));
+  private _newAuthor = new Author(0,'','');
+
+  private _author = new BehaviorSubject<Author>(this.newAuthor);
 
   path: string = 'https://localhost:7083/api/author';
 
   constructor(private http: HttpClient) { }
+
+  get newAuthor(){
+    return this._newAuthor;
+  }
 
   setAuthor(value: Author) {
     this._author.next(value);
