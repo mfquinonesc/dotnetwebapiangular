@@ -10,19 +10,19 @@
                     <table class="table is-fullwidth is-hoverable">
                         <thead>
                             <tr>
-                                <th>Index</th>
-                                <th>Editorial's name</th>
-                                <th>Editorial's location</th>
-                                <th>Open</th>
-                                <th>Delete</th>
+                                <th class="has-text-centered">Index</th>
+                                <th class="has-text-centered">Editorial's name</th>
+                                <th class="has-text-centered">Editorial's location</th>
+                                <th class="has-text-centered">Open</th>
+                                <th class="has-text-centered">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let editorial of editorialsList; let i = index;">
-                                <td>{{i+1}}</td>
-                                <td>{{editorial.name}}</td>
-                                <td>{{editorial.location}}</td>
-                                <td>
+                                <td class="has-text-centered">{{i+1}}</td>
+                                <td class="has-text-centered">{{editorial.name}}</td>
+                                <td class="has-text-centered">{{editorial.location}}</td>
+                                <td class="has-text-centered">
                                     <a (click)="toUpdateEditorial(editorial)">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18"
                                             viewBox="0 0 576 512">
@@ -31,7 +31,7 @@
                                         </svg>
                                     </a>
                                 </td>
-                                <td>
+                                <td class="has-text-centered">
                                     <a (click)="deleteEditorial(editorial.editorialId!)">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
                                             viewBox="0 0 448 512">

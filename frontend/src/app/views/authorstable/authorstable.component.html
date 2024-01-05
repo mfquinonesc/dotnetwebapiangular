@@ -9,19 +9,19 @@
                     <table class="table is-fullwidth is-hoverable">
                         <thead>
                             <tr>
-                                <th>Index</th>
-                                <th>Author's name</th>
-                                <th>Author's lastname</th>
-                                <th>Open</th>
-                                <th>Delete</th>
+                                <th class="has-text-centered">Index</th>
+                                <th class="has-text-centered">Author's name</th>
+                                <th class="has-text-centered">Author's lastname</th>
+                                <th class="has-text-centered">Open</th>
+                                <th class="has-text-centered">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let author of authorList; let i = index;">
-                                <td>{{i+1}}</td>
-                                <td>{{author.name}}</td>
-                                <td>{{author.lastname}}</td>
-                                <td>
+                                <td class="has-text-centered">{{i+1}}</td>
+                                <td class="has-text-centered">{{author.name}}</td>
+                                <td class="has-text-centered">{{author.lastname}}</td>
+                                <td class="has-text-centered">
                                     <a (click)="toUpdateAuthor(author)">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18"
                                             viewBox="0 0 576 512">
@@ -30,7 +30,7 @@
                                         </svg>
                                     </a>
                                 </td>
-                                <td>
+                                <td class="has-text-centered">
                                     <a (click)="deleteAuthor(author.authorId!)">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
                                             viewBox="0 0 448 512">

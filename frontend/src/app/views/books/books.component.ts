@@ -9,6 +9,7 @@ import { General } from 'src/app/models/general';
 import { AuthorService } from 'src/app/services/author.service';
 import { BookService } from 'src/app/services/book.service';
 import { EditorialService } from 'src/app/services/editorial.service';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-books',
@@ -29,16 +30,15 @@ export class BooksComponent implements OnInit {
   });
 
   _book: General = new General(0, '', '', 0, 0);
-  editorialIndex: number = 0;
-  authorIndex: number = 0;
+
 
   constructor(private editorialService: EditorialService, private authorService: AuthorService, private bookService: BookService, private formBuilder: FormBuilder, private router: Router) {
     this.loadAuthors();
-    this.loadEditorials();
-    this.loadUpdateBook();
+    this.loadEditorials();   
+    this.fillForm();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
     Aos.init({ once: true });
   }
 
@@ -75,26 +75,37 @@ export class BooksComponent implements OnInit {
   }
 
   loadUpdateBook() {
+    let result = undefined;
     this.bookService.getBook().subscribe({
       next: (value) => {
         if (value != new General(0, '', '', 0, 0)) {
-          this._book = value as General;         
-          this.bookForm.setValue({
-            title: this._book.title,
-            page: this._book.pages.toString(),
-            description: this._book.description,
-            editorial: null,
-            author: null
-          });
+          this._book = value as General; 
+          result =  this._book;
         }
       },
+    });
+    return result;
+  }
+
+  fillForm(){
+    Promise.resolve(this.loadUpdateBook()).then((value)=>{
+      if(value){
+        const book = value as General;
+        this.bookForm.setValue({
+          title: book.title,
+          page: book.pages.toString(),
+          editorial: null,
+          author: null,
+          description: book.description
+        });        
+      }
     });
   }
 
   loadEditorials() {
     this.editorialService.getAllEditorials().subscribe({
       next: (value) => {
-        if (value != null && value != undefined) {
+        if (value) {
           this.editorialsList = value as Editorial[];
         }
       },
@@ -104,7 +115,7 @@ export class BooksComponent implements OnInit {
   loadAuthors() {
     this.authorService.getAllAuthors().subscribe({
       next: (value) => {
-        if (value != null && value != undefined) {
+        if (value) {
           this.authorsList = value as Author[];
         }
       },
@@ -116,13 +127,14 @@ export class BooksComponent implements OnInit {
       const authorId = this.authorValue.authorId;
       const editorialId = this.editorialValue.editorialId;
       const book = new Book(0, this.titleValue!, this.descriptionValue!, this.pageValue, editorialId);
-      this.bookService.createBook(book, authorId!).subscribe({
-        next: (value) => {
-          if (value != null && value != undefined) {
-            this.router.navigateByUrl('books/table');
-          }
-        },
-      });
+      this.bookService.createFbBook(book, authorId!);
+      // .subscribe({
+      //   next: (value) => {
+      //     if (value) {
+      //       this.router.navigateByUrl('books/table');
+      //     }
+      //   },      
+      // });
     }
   }
 
@@ -141,9 +153,9 @@ export class BooksComponent implements OnInit {
     }
   }
 
-  saveAuthor() {
+  saveAuthor() {  
     if (this._book.bookId != 0) {
-      this.updateBook();
+      this.updateBook();     
     } else {
       this.createBook();
     }
