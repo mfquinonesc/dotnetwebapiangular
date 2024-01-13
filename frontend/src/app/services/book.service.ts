@@ -11,9 +11,15 @@ export class BookService {
 
   path: string = 'https://localhost:7083/api/book';
 
-  private _book = new BehaviorSubject<General>(new General(0, '', '', 0, 0));
+  private _newBook = new General(0, '', '', 0, 0);
+
+  private _book = new BehaviorSubject<General>(this.newBook);
 
   constructor(private http: HttpClient) { }
+
+  get newBook(){
+    return this._newBook;
+  }
 
   setBook(value: General) {
     this._book.next(value);
@@ -40,6 +46,15 @@ export class BookService {
   }
 
   updateBook(book: Book, id: number): Observable<any> {
-    return this.http.post(`${this.path}/${id}`, book);
+    return this.http.put(`${this.path}/${id}`, book);
+  }
+
+  //This part of code has to be removed because is just a test 
+  createFbBook(book: Book, id: number){
+    return this.http.post('https://myapi-d979d-default-rtdb.firebaseio.com/datos.json',book).subscribe({
+      next:(value)=> {
+        console.log(value);                
+      },
+    });
   }
 }

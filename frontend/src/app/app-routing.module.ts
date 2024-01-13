@@ -7,6 +7,7 @@ import { EditorialComponent } from './views/editorial/editorial.component';
 import { BookstableComponent } from './views/bookstable/bookstable.component';
 import { AuthorstableComponent } from './views/authorstable/authorstable.component';
 import { EditorialstableComponent } from './views/editorialstable/editorialstable.component';
+import { AboutComponent } from './views/about/about.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'editorials', component: EditorialComponent },
   { path: 'books/table', component: BookstableComponent },
   { path: 'authors/table', component: AuthorstableComponent },
-  { path: 'editorials/table', component: EditorialstableComponent }
+  { path: 'editorials/table', component: EditorialstableComponent },
+  { path: 'about', component: AboutComponent }
 ];
 
 @NgModule({

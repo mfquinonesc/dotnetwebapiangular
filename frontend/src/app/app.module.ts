@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthorstableComponent } from './views/authorstable/authorstable.component';
 import { EditorialstableComponent } from './views/editorialstable/editorialstable.component';
+import { AboutComponent } from './views/about/about.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { EditorialstableComponent } from './views/editorialstable/editorialstabl
     EditorialComponent,
     BookstableComponent,
     AuthorstableComponent,
-    EditorialstableComponent
+    EditorialstableComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,6 @@ import { General } from 'src/app/models/general';
 import { AuthorService } from 'src/app/services/author.service';
 import { BookService } from 'src/app/services/book.service';
 import { EditorialService } from 'src/app/services/editorial.service';
-import { __values } from 'tslib';
 
 @Component({
   selector: 'app-books',
@@ -29,16 +28,17 @@ export class BooksComponent implements OnInit {
     description: ['', Validators.required]
   });
 
-  _book: General = new General(0, '', '', 0, 0);
-
+  _book: General = this.bookService.newBook;
+  selectedAuthor:number = 0;
+  selectedEditorial: number = 0;
 
   constructor(private editorialService: EditorialService, private authorService: AuthorService, private bookService: BookService, private formBuilder: FormBuilder, private router: Router) {
     this.loadAuthors();
-    this.loadEditorials();   
+    this.loadEditorials();
     this.fillForm();
   }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
     Aos.init({ once: true });
   }
 
@@ -57,7 +57,6 @@ export class BooksComponent implements OnInit {
   get description() {
     return this.bookForm.controls.description;
   }
-
   get titleValue() {
     return this.bookForm.value.title;
   }
@@ -78,18 +77,18 @@ export class BooksComponent implements OnInit {
     let result = undefined;
     this.bookService.getBook().subscribe({
       next: (value) => {
-        if (value != new General(0, '', '', 0, 0)) {
-          this._book = value as General; 
-          result =  this._book;
+        if (value != this.bookService.newBook) {
+          this._book = value as General;
+          result = this._book;
         }
       },
     });
     return result;
   }
 
-  fillForm(){
-    Promise.resolve(this.loadUpdateBook()).then((value)=>{
-      if(value){
+  fillForm() {
+    Promise.resolve(this.loadUpdateBook()).then((value) => {
+      if (value) {
         const book = value as General;
         this.bookForm.setValue({
           title: book.title,
@@ -97,7 +96,7 @@ export class BooksComponent implements OnInit {
           editorial: null,
           author: null,
           description: book.description
-        });        
+        });
       }
     });
   }
@@ -106,7 +105,7 @@ export class BooksComponent implements OnInit {
     this.editorialService.getAllEditorials().subscribe({
       next: (value) => {
         if (value) {
-          this.editorialsList = value as Editorial[];
+          this.editorialsList = value as Editorial[];        
         }
       },
     });
@@ -127,25 +126,24 @@ export class BooksComponent implements OnInit {
       const authorId = this.authorValue.authorId;
       const editorialId = this.editorialValue.editorialId;
       const book = new Book(0, this.titleValue!, this.descriptionValue!, this.pageValue, editorialId);
-      this.bookService.createFbBook(book, authorId!);
-      // .subscribe({
-      //   next: (value) => {
-      //     if (value) {
-      //       this.router.navigateByUrl('books/table');
-      //     }
-      //   },      
-      // });
+      this.bookService.createBook(book, authorId!).subscribe({
+        next: (value) => {
+          if (value) {
+            this.router.navigateByUrl('books/table');
+          }
+        },
+      });
     }
   }
 
   updateBook() {
     if (this.bookForm.valid) {
-      const authorId = this.authorValue.authorId;
+      // const authorId = this.authorValue.authorId;
       const editorialId = this.editorialValue.editorialId;
       const book = new Book(0, this.titleValue!, this.descriptionValue!, this.pageValue, editorialId);
       this.bookService.updateBook(book, this._book.bookId!).subscribe({
         next: (value) => {
-          if (value != null && value != undefined) {
+          if (value) {
             this.router.navigateByUrl('/books/table');
           }
         },
@@ -153,9 +151,9 @@ export class BooksComponent implements OnInit {
     }
   }
 
-  saveAuthor() {  
+  saveAuthor() {
     if (this._book.bookId != 0) {
-      this.updateBook();     
+      this.updateBook();
     } else {
       this.createBook();
     }

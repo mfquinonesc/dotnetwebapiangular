@@ -32,7 +32,7 @@
           <div class="field">
             <label class="label">Pages</label>
             <div class="control">
-              <input formControlName="page" class="input" type="text" placeholder="Text input">
+              <input formControlName="page" class="input" type="number" placeholder="Text input">
             </div>
           </div>
 
@@ -40,8 +40,9 @@
             <label class="label">Editorial</label>
             <div class="control">
               <div class="select">
-                <select formControlName="editorial" >                
-                  <option *ngFor="let editorial of editorialsList; let i = index;" [ngValue]="editorial">{{editorial.name +" - "+editorial.location}}</option>
+                <select formControlName="editorial">
+                  <option *ngFor="let editorial of editorialsList; let i = index;" [ngValue]="editorial">
+                    {{editorial.name +" - "+editorial.location}}</option>
                 </select>
               </div>
             </div>
@@ -51,8 +52,9 @@
             <label class="label">Author</label>
             <div class="control">
               <div class="select">
-                <select formControlName="author" >                 
-                  <option *ngFor="let author of authorsList; let i = index;" [ngValue]="author">{{author.name + " - "+ author.lastname}}</option>                 
+                <select formControlName="author" >
+                  <option *ngFor="let author of authorsList; let i = index;" [ngValue]="author">{{author.name + " - "+
+                    author.lastname}}</option>
                 </select>
               </div>
             </div>

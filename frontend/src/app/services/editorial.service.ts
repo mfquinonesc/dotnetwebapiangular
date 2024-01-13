@@ -10,13 +10,13 @@ export class EditorialService {
 
   path: string = 'https://localhost:7083/api/editorial';
 
-  private _newEditorial = new Editorial(0,'','');
+  private _newEditorial = new Editorial(0, '', '');
 
   private _editorial = new BehaviorSubject<Editorial>(this.newEditorial);
 
   constructor(private http: HttpClient) { }
 
-  get newEditorial(){
+  get newEditorial() {
     return this._newEditorial;
   }
 
@@ -34,6 +34,10 @@ export class EditorialService {
 
   getAllEditorials(): Observable<any> {
     return this.http.get(this.path);
+  }
+
+  getEditorialById(id: number): Observable<any> {
+    return this.http.get(`${this.path}/${id}`);
   }
 
   createEditorial(editorial: Editorial): Observable<any> {
